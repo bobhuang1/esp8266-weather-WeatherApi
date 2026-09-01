@@ -6,25 +6,6 @@ forecast. Get a free API key at https://www.weatherapi.com/signup.aspx (see
 their [docs](https://www.weatherapi.com/docs/) for the full request/response
 reference).
 
-## Why this replaced the old HeWeather client
-
-This library previously targeted `free-api.heweather.com` (the old HeWeather
-v6 "s6" API). That domain no longer resolves at all - the service rebranded
-to QWeather years ago and retired the old free API tier/domain along with it.
-Two more problems made the old code worth replacing rather than patching:
-
-- It pinned a TLS certificate fingerprint (`client.setFingerprint(...)`) that
-  goes stale every time the server's certificate renews - a maintenance trap
-  even setting the dead domain aside.
-- An example API key was accidentally left in a source comment.
-
-WeatherAPI.com's JSON response schema happens to closely match this
-project's previous [esp8266-weather-APIXU](https://github.com/bobhuang1/esp8266-weather-APIXU)
-library (WeatherAPI.com originated from the same team as the now-shut-down
-APIXU service and kept its API contract), so the new `WeatherApiWeather`
-class combines both current + forecast into one call, more efficient than
-issuing two separate requests.
-
 ## Usage
 
 ```cpp
@@ -56,10 +37,10 @@ void setup() {
 ## Security note
 
 The client uses `WiFiClientSecure::setInsecure()`, which skips TLS
-certificate validation. This avoids the stale-fingerprint trap the previous
-version fell into (a pinned fingerprint breaks on every certificate renewal),
-at the cost of not verifying the server's identity. If you need certificate
-validation, replace it with `client.setTrustAnchors()` using WeatherAPI.com's
+certificate validation, at the cost of not verifying the server's identity.
+This avoids the maintenance burden of a pinned certificate fingerprint,
+which breaks on every certificate renewal. If you need certificate
+validation, use `client.setTrustAnchors()` instead, with WeatherAPI.com's
 current root CA certificate.
 
 ## Forecast fields
