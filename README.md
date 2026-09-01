@@ -62,6 +62,15 @@ at the cost of not verifying the server's identity. If you need certificate
 validation, replace it with `client.setTrustAnchors()` using WeatherAPI.com's
 current root CA certificate.
 
+## Forecast fields
+
+Note that WeatherAPI.com's daily forecast is a day-level aggregate, not the
+day/night split some other providers offer: `WeatherApiForecastData` has one
+`text`/`code` per day (not separate day and night condition text) and
+`maxwind_kph` (a single peak wind speed for the day, no discrete direction -
+wind direction is only available at hourly granularity, which this library
+doesn't parse). `chanceOfRain` maps to WeatherAPI.com's `daily_chance_of_rain`.
+
 ## Dependencies
 
 - [JsonStreamingParser](https://github.com/squix78/json-streaming-parser)
