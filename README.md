@@ -65,3 +65,8 @@ two-character glyph pair (day-icon, night-icon) from the "Meteocons" icon
 font used by several ESP8266 weather station projects. You'll need that font
 (or your own icon set) to actually render these; this library only returns
 the mapping.
+
+
+## License
+
+This project is free software, released under the **GNU General Public License v3.0**. You may redistribute and/or modify it under those terms; see [LICENSE.md](LICENSE.md) for the full text.
